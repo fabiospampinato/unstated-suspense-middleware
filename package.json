@@ -1,6 +1,6 @@
 {
   "name": "unstated-suspense-middleware",
-  "description": "Add support for middlewares to unstated containers.",
+  "description": "Add middlewares support to `unstated-suspense`.",
   "version": "1.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -26,10 +26,11 @@
   "keywords": [
     "unstated",
     "react",
+    "suspense",
     "middleware"
   ],
   "dependencies": {
-    "unstated-suspense": "^1.0.0"
+    "unstated-suspense": "^1.0.1"
   },
   "devDependencies": {
     "@types/node": "^10.9.4",
