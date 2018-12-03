@@ -7,6 +7,7 @@ import {Container as BaseContainer} from 'unstated-suspense';
 
 class Container<State extends object> extends BaseContainer<State> {
 
+  _running = false;
   _middlewares: Function[] = [];
 
   constructor () {
@@ -33,19 +34,29 @@ class Container<State extends object> extends BaseContainer<State> {
 
   async setState ( updater: State | ( ( prevState: State ) => State ), callback?: () => void ) {
 
+    const isRunConcurrent = this._running;
+
+    this._running = true;
+
     this.suspend ();
 
     let prevState = this.state;
 
     await super.setState ( updater, callback );
 
-    for ( let i = 0, l = this._middlewares.length; i < l; i++ ) {
+    if ( !isRunConcurrent ) {
 
-      const middleware = this._middlewares[i];
+      for ( let i = 0, l = this._middlewares.length; i < l; i++ ) {
 
-      this.state = await middleware.call ( this, prevState ) || this.state;
+        const middleware = this._middlewares[i];
+
+        this.state = await middleware.call ( this, prevState ) || this.state;
+
+      }
 
     }
+
+    this._running = false;
 
     this.unsuspend ();
 

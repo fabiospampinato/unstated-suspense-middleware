@@ -38,6 +38,10 @@ class AppContainer extends Container {
 }
 ```
 
+**Note**: Middlewares are **not** re-executed when any of them update the state.
+
+**Note**: Middlewares are executed in the order that they are added, make sure you're adding them in the right order.
+
 ## Related
 
 - **[unstated-with-containers](https://github.com/fabiospampinato/unstated-with-containers)**: Higher-Order Component for subscribing to containers.
