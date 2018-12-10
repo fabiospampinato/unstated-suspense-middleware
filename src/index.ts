@@ -7,8 +7,8 @@ import {Container as BaseContainer} from 'unstated-suspense';
 
 class Container<State extends object> extends BaseContainer<State> {
 
-  _running = false;
-  _middlewares: Function[] = [];
+  private _running = false;
+  private _middlewares: Function[] = [];
 
   constructor () {
 
@@ -32,7 +32,7 @@ class Container<State extends object> extends BaseContainer<State> {
 
   }
 
-  async setState ( updater: State | ( ( prevState: State ) => State ), callback?: () => void ) {
+  async setState ( updater: ( ( prevState: Readonly<State> ) => Partial<State> | State | null) | Partial<State> | State | null, callback?: Function ): Promise<void> {
 
     const isRunConcurrent = this._running;
 
