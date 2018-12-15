@@ -30,7 +30,11 @@ class AppContainer extends Container {
     }
   }
   updateValueFoo () {
+    this.suspendMiddlewares (); // Suspend execution of middlewares
     this.setState ({ value: 'foo' });
+    this.setState ({ value: 'foo2' });
+    this.setState ({ value: 'foo3' });
+    this.unsuspendMiddlewares (); // Resume execution of middlewares, since the state changed while middlewares were suspended they will be called, and they will receive the state available at the moment of the suspension
   }
   updateValueBar () {
     this.setState ({ value: 'bar' });
