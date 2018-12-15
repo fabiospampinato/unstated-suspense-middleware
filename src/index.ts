@@ -42,8 +42,10 @@ class Container<State extends object> extends BaseContainer<State> {
   unsuspendMiddlewares (): void {
     if ( !this._middlewaresSuspendNr ) return;
     this._middlewaresSuspendNr--;
-    if ( !this._middlewaresSuspendNr && this._middlewaresSuspended && this._middlewaresSuspendedState ) this._middlewaresRun ( this._middlewaresSuspendedState );
-    this._middlewaresSuspendedState = undefined;
+    if ( !this._middlewaresSuspendNr && this._middlewaresSuspended && this._middlewaresSuspendedState ) {
+      this._middlewaresRun ( this._middlewaresSuspendedState );
+      this._middlewaresSuspendedState = undefined;
+    }
   }
 
   async setState ( updater: ( ( prevState: Readonly<State> ) => Partial<State> | State | null) | Partial<State> | State | null, callback?: Function ): Promise<void> {
